@@ -1,0 +1,33 @@
+// File: WeatherForecastController.cs
+
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace WeatherApp.Controllers
+{
+    [ApiController]
+    [Route("api/weather")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private readonly HttpClient _httpClient;
+
+        public WeatherForecastController(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
+        [HttpGet("{city}")]
+        public async Task<IActionResult> GetWeather(string city)
+        {
+            var apiKey = "your_openweathermap_api_key";
+            var response = await _httpClient.GetAsync($"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}");
+            
+            if (!response.IsSuccessStatusCode)
+                return BadRequest("Could not fetch weather data.");
+
+            var weatherData = await response.Content.ReadAsStringAsync();
+            return Ok(weatherData);
+        }
+    }
+}
