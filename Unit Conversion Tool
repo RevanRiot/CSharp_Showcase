@@ -1,0 +1,41 @@
+// File: UnitConverter.cs
+
+using System;
+
+namespace UnitConverter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Unit Converter");
+            Console.WriteLine("1. Miles to Kilometers");
+            Console.WriteLine("2. Kilograms to Pounds");
+            Console.WriteLine("3. Celsius to Fahrenheit");
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.Write("Enter miles: ");
+                    double miles = double.Parse(Console.ReadLine());
+                    Console.WriteLine($"{miles} miles is {miles * 1.60934} kilometers.");
+                    break;
+                case "2":
+                    Console.Write("Enter kilograms: ");
+                    double kg = double.Parse(Console.ReadLine());
+                    Console.WriteLine($"{kg} kg is {kg * 2.20462} pounds.");
+                    break;
+                case "3":
+                    Console.Write("Enter Celsius: ");
+                    double celsius = double.Parse(Console.ReadLine());
+                    Console.WriteLine($"{celsius}°C is {celsius * 9 / 5 + 32}°F.");
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    break;
+            }
+        }
+    }
+}
