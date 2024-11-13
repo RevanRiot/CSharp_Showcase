@@ -1,0 +1,49 @@
+// File: TextEncryptor.cs
+
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
+namespace TextEncryptionApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter text to encrypt: ");
+            string plainText = Console.ReadLine();
+
+            string encrypted = Encrypt(plainText);
+            Console.WriteLine($"Encrypted Text: {encrypted}");
+
+            string decrypted = Decrypt(encrypted);
+            Console.WriteLine($"Decrypted Text: {decrypted}");
+        }
+
+        static string Encrypt(string plainText)
+        {
+            using Aes aes = Aes.Create();
+            byte[] key = aes.Key;
+            byte[] iv = aes.IV;
+
+            ICryptoTransform encryptor = aes.CreateEncryptor(key, iv);
+            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+
+            byte[] encryptedBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
+        static string Decrypt(string encryptedText)
+        {
+            using Aes aes = Aes.Create();
+            byte[] key = aes.Key;
+            byte[] iv = aes.IV;
+
+            ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
+            byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+
+            byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+            return Encoding.UTF8.GetString(decryptedBytes);
+        }
+    }
+}
