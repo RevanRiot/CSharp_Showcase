@@ -1,0 +1,71 @@
+// File: StockTradingSimulator.cs
+
+using System;
+using System.Collections.Generic;
+
+namespace StockSimulator
+{
+    class Program
+    {
+        static List<Stock> portfolio = new List<Stock>();
+
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("\nStock Trading Simulator");
+                Console.WriteLine("1. Buy Stock");
+                Console.WriteLine("2. View Portfolio");
+                Console.WriteLine("3. Exit");
+                Console.Write("Choose an option: ");
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    BuyStock();
+                }
+                else if (choice == "2")
+                {
+                    ViewPortfolio();
+                }
+                else if (choice == "3")
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice.");
+                }
+            }
+        }
+
+        static void BuyStock()
+        {
+            Console.Write("Enter stock name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter quantity: ");
+            int quantity = int.Parse(Console.ReadLine());
+            Console.Write("Enter price: ");
+            decimal price = decimal.Parse(Console.ReadLine());
+
+            portfolio.Add(new Stock { Name = name, Quantity = quantity, Price = price });
+            Console.WriteLine("Stock purchased!");
+        }
+
+        static void ViewPortfolio()
+        {
+            Console.WriteLine("\nPortfolio:");
+            foreach (var stock in portfolio)
+            {
+                Console.WriteLine($"Name: {stock.Name}, Quantity: {stock.Quantity}, Price: ${stock.Price:F2}");
+            }
+        }
+    }
+
+    class Stock
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+    }
+}
