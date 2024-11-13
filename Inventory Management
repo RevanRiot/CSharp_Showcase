@@ -1,0 +1,68 @@
+// File: InventoryManager.cs
+
+using System;
+using System.Collections.Generic;
+
+namespace InventoryManagerApp
+{
+    class Program
+    {
+        static List<Item> inventory = new List<Item>();
+
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("\nInventory Manager");
+                Console.WriteLine("1. Add Item");
+                Console.WriteLine("2. View Inventory");
+                Console.WriteLine("3. Exit");
+                Console.Write("Choose an option: ");
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    AddItem();
+                }
+                else if (choice == "2")
+                {
+                    ViewInventory();
+                }
+                else if (choice == "3")
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice.");
+                }
+            }
+        }
+
+        static void AddItem()
+        {
+            Console.Write("Enter item name: ");
+            string name = Console.ReadLine();
+            Console.Write("Enter item quantity: ");
+            int quantity = int.Parse(Console.ReadLine());
+
+            inventory.Add(new Item { Name = name, Quantity = quantity });
+            Console.WriteLine("Item added!");
+        }
+
+        static void ViewInventory()
+        {
+            Console.WriteLine("\nInventory:");
+            foreach (var item in inventory)
+            {
+                Console.WriteLine($"Name: {item.Name}, Quantity: {item.Quantity}");
+            }
+        }
+    }
+
+    class Item
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+    }
+}
