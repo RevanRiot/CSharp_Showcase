@@ -1,0 +1,16 @@
+// File: ImageGalleryController.cs
+
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+
+namespace ImageGallery.Controllers
+{
+    public class GalleryController : Controller
+    {
+        public IActionResult Index()
+        {
+            string[] images = Directory.GetFiles("wwwroot/images");
+            return View(images);
+        }
+    }
+}
