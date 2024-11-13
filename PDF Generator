@@ -1,0 +1,30 @@
+// File: PdfGenerator.cs
+
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+
+namespace PdfGeneratorApp
+{
+    public class PdfGenerator
+    {
+        public static void GeneratePdf(string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                Document doc = new Document();
+                PdfWriter.GetInstance(doc, fs);
+                doc.Open();
+                doc.Add(new Paragraph("Hello, PDF World!"));
+                doc.Close();
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            string outputPath = "output.pdf";
+            GeneratePdf(outputPath);
+            System.Console.WriteLine($"PDF generated at {outputPath}");
+        }
+    }
+}
