@@ -1,0 +1,27 @@
+// File: ResumeBuilder.cs
+
+using System;
+using System.IO;
+
+namespace ResumeBuilderApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter your name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Enter your skills (comma-separated): ");
+            string skills = Console.ReadLine();
+
+            Console.Write("Enter your experience: ");
+            string experience = Console.ReadLine();
+
+            string resume = $"Name: {name}\nSkills: {skills}\nExperience: {experience}";
+
+            File.WriteAllText("Resume.txt", resume);
+            Console.WriteLine("Resume saved as Resume.txt");
+        }
+    }
+}
