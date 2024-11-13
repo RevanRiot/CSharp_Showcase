@@ -1,0 +1,43 @@
+// File: IoTController.cs
+
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+
+namespace IoTManager.Controllers
+{
+    [ApiController]
+    [Route("api/devices")]
+    public class IoTController : ControllerBase
+    {
+        private static List<IoTDevice> devices = new List<IoTDevice>
+        {
+            new IoTDevice { Id = 1, Name = "Thermostat", Status = "Online" },
+            new IoTDevice { Id = 2, Name = "Light", Status = "Offline" }
+        };
+
+        [HttpGet]
+        public IActionResult GetDevices()
+        {
+            return Ok(devices);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateDevice(int id, IoTDevice device)
+        {
+            var existingDevice = devices.Find(d => d.Id == id);
+            if (existingDevice == null)
+                return NotFound();
+
+            existingDevice.Name = device.Name;
+            existingDevice.Status = device.Status;
+            return Ok(existingDevice);
+        }
+    }
+
+    public class IoTDevice
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+    }
+}
