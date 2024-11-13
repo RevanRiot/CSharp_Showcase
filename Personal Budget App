@@ -1,0 +1,54 @@
+// File: BudgetForm.cs
+
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace BudgetApp
+{
+    public partial class BudgetForm : Form
+    {
+        private decimal totalIncome = 0;
+        private decimal totalExpenses = 0;
+
+        public BudgetForm()
+        {
+            InitializeComponent();
+        }
+
+        private void AddIncomeButton_Click(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(incomeTextBox.Text, out decimal income))
+            {
+                totalIncome += income;
+                UpdateTotals();
+                MessageBox.Show("Income added!");
+            }
+            else
+            {
+                MessageBox.Show("Invalid income amount.");
+            }
+        }
+
+        private void AddExpenseButton_Click(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(expenseTextBox.Text, out decimal expense))
+            {
+                totalExpenses += expense;
+                UpdateTotals();
+                MessageBox.Show("Expense added!");
+            }
+            else
+            {
+                MessageBox.Show("Invalid expense amount.");
+            }
+        }
+
+        private void UpdateTotals()
+        {
+            totalIncomeLabel.Text = $"Total Income: ${totalIncome:F2}";
+            totalExpensesLabel.Text = $"Total Expenses: ${totalExpenses:F2}";
+            balanceLabel.Text = $"Balance: ${totalIncome - totalExpenses:F2}";
+        }
+    }
+}
