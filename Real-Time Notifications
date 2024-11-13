@@ -1,0 +1,45 @@
+// File: NotificationService.cs
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace NotificationApp
+{
+    class NotificationService
+    {
+        static Queue<string> notifications = new Queue<string>();
+
+        static void Main(string[] args)
+        {
+            Thread notificationThread = new Thread(ShowNotifications);
+            notificationThread.Start();
+
+            while (true)
+            {
+                Console.Write("Enter notification message (or 'exit' to quit): ");
+                string message = Console.ReadLine();
+
+                if (message.ToLower() == "exit")
+                    break;
+
+                notifications.Enqueue(message);
+            }
+
+            notificationThread.Abort();
+        }
+
+        static void ShowNotifications()
+        {
+            while (true)
+            {
+                if (notifications.Count > 0)
+                {
+                    Console.WriteLine($"Notification: {notifications.Dequeue()}");
+                }
+
+                Thread.Sleep(1000);
+            }
+        }
+    }
+}
